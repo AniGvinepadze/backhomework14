@@ -7,12 +7,19 @@
 
 
 
+
+// 1) იუზერების სქემას დაუმატებთ expenses: [] მასივს სადაც ჩასეტავთ ყოველ ახალ დამატებულ იქსფენს.
+// 2) იქსფენსების სქემას დაუმატებთ user: user._id სადაც ჩაისეტება რომელმა იუზერმაც შექმნა ეს იქნფენსი იმის აიდი. აიდის აიღებთ ტოკენიდან.
+// 3) იქსფენსის წაშლა/აფდეითის დროს უნდა შეამოწმოთ გადმოცემული იქსფენსის აიდი მართლა თუ არის user-ს რომ expenses გააჩნია ამ მასივში, თუ არ არის ვერც წაშლის და ვერც დააფდეითებს. ანუ იუზერს უნდა ჰქონდეს მხოლოდ თავისი შექმნილი იქსფენსის წაშლის და დააფდეითების უფლება
+
+
 const express = require("express")
 const userRouter = require("./users/users.route")
 const authRouter = require("./auth/auth.route")
 const connectToDb = require("./db/connectToDb")
-const isAuth = require("./middlewares/isAuth.middleware")
+
 const expenseRouter = require("./expenses/expnses.route")
+const isAuth = require("./middlewares/isAuth.middleware")
 
 const app = express()
 app.use(express.json())

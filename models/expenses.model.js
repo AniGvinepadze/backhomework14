@@ -4,7 +4,7 @@ const expenseSchema = new mongoose.Schema({
     title:String,
     content:String,
 
-    user:{type:mongoose.Schema.Types.ObjectId,ref:'expense',default:[]}
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'user',default:[]}
 })
 
 module.exports = mongoose.model("expense",expenseSchema)

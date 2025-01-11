@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const usersModel = require("../models/users.model");
 const { isValidObjectId } = require("mongoose");
+const isAuth = require("../middlewares/isAuth.middleware");
 const userRouter = Router();
 
 userRouter.get("/", async (req, res) => {
@@ -18,7 +19,7 @@ userRouter.get("/:id", async (req, res) => {
   res.json(user);
 });
 
-userRouter.delete("/:id", async (req, res) => {
+userRouter.delete("/:id", isAuth, async (req, res) => {
   const { id } = req.params;
   if (!isValidObjectId(id))
     return res.status(400).json({ message: "your id is not valid" });
@@ -27,7 +28,7 @@ userRouter.delete("/:id", async (req, res) => {
   res.json({ message: "user deleted succsessfully", data: user });
 });
 
-userRouter.put("/:id", async (req, res) => {
+userRouter.put("/:id", isAuth, async (req, res) => {
   const { id } = req.params;
   if (!isValidObjectId(id))
     return res.status(400).json({ message: "your id is not valid" });
@@ -37,11 +38,9 @@ userRouter.put("/:id", async (req, res) => {
   if (fullName) updateReq.fullName = fullName;
   if (email) updateReq.email = email;
 
-  const user = await usersModel.findByIdAndUpdate(id,updateReq,{new:true});
+  const user = await usersModel.findByIdAndUpdate(id, updateReq, { new: true });
   if (!user) res.status(400).json({ message: "user didnt update" });
   res.json({ message: "user updated succsessfully", data: user });
 });
-
-
 
 module.exports = userRouter;
